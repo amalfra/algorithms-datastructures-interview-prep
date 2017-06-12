@@ -1,3 +1,10 @@
+/*
+  Time Complexity:
+
+    Best case    - O(n)
+    Average case - O(n^2)
+    Worst case   - O(n^2)
+*/
 #include <stdio.h>
 
 void swap(int *a, int *b) {

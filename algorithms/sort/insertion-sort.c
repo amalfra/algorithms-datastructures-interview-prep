@@ -1,30 +1,23 @@
 /*
   Time Complexity:
 
-    Best case    - O(n^2)
+    Best case    - O(n)
     Average case - O(n^2)
     Worst case   - O(n^2)
 */
 #include <stdio.h>
 
-void swap(int *a, int *b) {
-  int temp = *a;
-  *a = *b;
-  *b = temp;
-}
-
 void sort(int *elements, int number_of_elements) {
-  int i, j, min;
+  int i, j, temp;
+  for (i = 1; i < number_of_elements; i++) {
+    temp = elements[i];
+    j = i-1;
 
-  for (i = 0; i < number_of_elements-1; i++)
-  {
-    min = elements[i];
-    for (j = i+1; j < number_of_elements; j++) {
-      if (elements[j] < min) {
-        min = elements[j];
-        swap(&elements[i], &elements[j]);
-      }
+    while (j >= 0 && elements[j] > temp) {
+      elements[j+1] = elements[j];
+      j--;
     }
+    elements[j+1] = temp;
   }
 }
 
@@ -35,7 +28,7 @@ void main() {
   scanf("%d", &number_of_elements);
 
   int elements[number_of_elements];
-  while(i < number_of_elements) {
+  while (i < number_of_elements) {
     printf("Enter element(%d): ", i+1);
     scanf("%d", &elements[i]);
     i++;
