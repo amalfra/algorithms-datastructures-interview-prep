@@ -14,17 +14,11 @@ struct stack {
 };
 
 int is_empty(struct stack s) {
-  if (s.top == -1) {
-    return 1;
-  }
-  return 0;
+  return (s.top == -1);
 }
 
 int is_full(struct stack s) {
-  if (s.top == s.size-1) {
-    return 1;
-  }
-  return 0;
+  return (s.top == s.size-1);
 }
 
 void display(struct stack s) {
