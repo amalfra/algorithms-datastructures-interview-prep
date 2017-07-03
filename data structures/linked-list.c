@@ -26,52 +26,53 @@ void display(struct node *head) {
   }
 }
 
-void add_front(struct node **head, int value) {
+struct node* add_front(struct node *head, int value) {
   struct node *temp = malloc(sizeof(struct node));
   temp->data = value;
   temp->next = NULL;
-  if (*head != NULL) {
-    temp->next = *head;
+  if (head != NULL) {
+    temp->next = head;
   }
-  *head = temp;
+  head = temp;
+  return head;
 }
 
-void add_end(struct node **head, int value) {
-  struct node *current = *head;
+struct node* add_end(struct node *head, int value) {
+  struct node *current = head;
   struct node *temp = malloc(sizeof(struct node));
   temp->data = value;
   temp->next = NULL;
   if (current == NULL) {
-    *head = temp;
+    head = temp;
   } else {
-    while (current->next != NULL)
-    {
+    while (current->next != NULL) {
       current = current->next;
     }
     current->next = temp;
   }
+  return head;
 }
 
-void remove_front(struct node **head) {
-  if (*head == NULL) {
+struct node* remove_front(struct node *head) {
+  if (head == NULL) {
     printf("List is empty!");
   } else {
-    struct node *temp = *head;
-    *head = (*head)->next;
+    struct node *temp = head;
+    head = head->next;
     printf("%d removed from list", temp->data);
     free(temp);
   }
+  return head;
 }
 
-void remove_end(struct node **head) {
-  if (*head == NULL) {
+struct node* remove_end(struct node *head) {
+  if (head == NULL) {
     printf("List is empty!");
   } else {
     struct node *temp = NULL;
-    struct node *current = *head;
-    if ((*head)->next == NULL) {
-      temp = *head;
-      *head = NULL;
+    struct node *current = head;
+    if (head->next == NULL) {
+      head = NULL;
     } else {
       while (current->next != NULL)
       {
@@ -83,6 +84,7 @@ void remove_end(struct node **head) {
     printf("%d removed from list", current->data);
     free(current);
   }
+  return head;
 }
 
 void main() {
@@ -108,18 +110,18 @@ void main() {
       case 2:
         printf("Enter the value to add: ");
         scanf("%d", &value);
-        add_front(&head, value);
+        head = add_front(head, value);
         break;
       case 3:
         printf("Enter the value to add: ");
         scanf("%d", &value);
-        add_end(&head, value);
+        head = add_end(head, value);
         break;
       case 4:
-        remove_front(&head);
+        head = remove_front(head);
         break;
       case 5:
-        remove_end(&head);
+        head = remove_end(head);
         break;
       case 6:
         exit(0);
