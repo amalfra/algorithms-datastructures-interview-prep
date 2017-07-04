@@ -32,11 +32,32 @@ void add_edge(struct graph* graph, int src, int dest) {
   temp->dest = dest;
   temp->next = graph->list[src].head;
   graph->list[src].head = temp;
+}
 
-  struct node *temp1 = malloc(sizeof(struct node));
-  temp1->dest = src;
-  temp1->next = graph->list[dest].head;
-  graph->list[dest].head = temp1;
+void visit_mark(int vertex, int *visited, struct graph *graph) {
+  visited[vertex] = 1;
+  printf("%d ", vertex);
+
+  struct node *current = graph->list[vertex].head;
+  while (current != NULL) {
+    if (visited[current->dest] != 1) {
+      visit_mark(current->dest, visited, graph);
+    }
+    current = current->next;
+  }
+}
+
+void dfs(struct graph *graph) {
+  int visited[graph->v], i;
+  for (i = 0; i < graph->v; i++) {
+    visited[i] = 0;
+  }
+
+  for (i = 0; i < graph->v; i++) {
+    if (visited[i] != 1) {
+      visit_mark(i, visited, graph);
+    }
+  }  
 }
 
 void main() {
@@ -53,8 +74,9 @@ void main() {
   do {
     printf("\n\n");
     printf("1. Display adjacency list\n");
-    printf("2. Add edge\n");
-    printf("3. Exit\n");
+    printf("2. DFS\n");
+    printf("4. Add edge\n");
+    printf("5. Exit\n");
     printf("Enter option: ");
     scanf("%d", &option);
     printf("\n");
@@ -64,13 +86,16 @@ void main() {
         display(graph);
         break;
       case 2:
+        dfs(graph);
+        break;
+      case 4:
         printf("Enter source vertex: ");
         scanf("%d", &value1);
         printf("Enter destination vertex: ");
         scanf("%d", &value2);
         add_edge(graph, value1, value2);
         break;
-      case 3:
+      case 5:
         exit(0);
         break;
       default:
